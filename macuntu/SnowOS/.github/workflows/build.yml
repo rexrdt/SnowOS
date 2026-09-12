@@ -1,21 +1,47 @@
 name: Build SnowOS ISO
+
 on:
   workflow_dispatch:
   push:
-    tags: ['v*']
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Install deps
-        run: sudo apt update && sudo apt install -y xorriso squashfs-tools genisoimage rsync wget curl gpg
-      - name: Build
+      - name: Checkout SnowOS
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential \
+            gcc \
+            g++ \
+            nasm \
+            grub-pc-bin \
+            grub-common \
+            xorriso \
+            mtools \
+            qemu-system-x86
+
+      - name: Make build script executable
+        run: chmod +x build.sh
+
+      - name: Build SnowOS
         run: ./build.sh
-      - name: Upload ISO
+
+      - name: Find generated ISO
+        run: |
+          echo "Searching for ISO..."
+          find . -type f -name "*.iso" -print
+
+      - name: Upload SnowOS ISO
         uses: actions/upload-artifact@v4
         with:
           name: SnowOS-ISO
-          path: build/output/*.iso
+          path: "**/*.iso"
+          if-no-files-found: error

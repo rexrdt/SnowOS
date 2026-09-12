@@ -1,1 +1,21 @@
+name: Build SnowOS ISO
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
 
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: sudo apt update && sudo apt install -y xorriso squashfs-tools genisoimage rsync wget curl gpg
+      - name: Build
+        run: ./build.sh
+      - name: Upload ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: SnowOS-ISO
+          path: build/output/*.iso

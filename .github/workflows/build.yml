@@ -1,26 +1,49 @@
 name: Build SnowOS ISO
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
 
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
   build:
+    name: Build SnowOS
     runs-on: ubuntu-latest
 
     steps:
+      # Get the SnowOS source code
       - name: Checkout SnowOS
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
+      # Show what is actually in the repository
+      - name: Show repository files
+        run: |
+          echo "Current directory:"
+          pwd
+
+          echo ""
+          echo "Repository contents:"
+          ls -la
+
+          echo ""
+          echo "Build script:"
+          ls -la build.sh || true
+
+      # Install common tools required for building a bootable ISO
       - name: Install build dependencies
         run: |
-          sudo apt update
-          sudo apt install -y \
+          sudo apt-get update
+
+          sudo apt-get install -y \
             build-essential \
             gcc \
             g++ \
+            make \
             nasm \
             grub-pc-bin \
             grub-common \
@@ -28,20 +51,54 @@ jobs:
             mtools \
             qemu-system-x86
 
-      - name: Make build script executable
-        run: chmod +x build.sh
-
-      - name: Build SnowOS
-        run: ./build.sh
-
-      - name: Find generated ISO
+      # Make build.sh executable
+      - name: Prepare build script
         run: |
-          echo "Searching for ISO..."
-          find . -type f -name "*.iso" -print
+          chmod +x build.sh
 
+          echo "build.sh permissions:"
+          ls -la build.sh
+
+          echo ""
+          echo "build.sh information:"
+          file build.sh
+
+      # Run SnowOS build
+      - name: Build SnowOS
+        shell: bash
+        run: |
+          set -e
+
+          echo "========================================"
+          echo "        Building SnowOS"
+          echo "========================================"
+
+          echo ""
+          echo "Running build.sh..."
+
+          ./build.sh
+
+          echo ""
+          echo "build.sh completed successfully."
+
+      # Search the entire repository for generated ISOs
+      - name: Find generated ISO
+        if: success()
+        run: |
+          echo "Searching for ISO files..."
+
+          find . \
+            -type f \
+            -iname "*.iso" \
+            -print
+
+      # Upload the ISO to GitHub Actions
       - name: Upload SnowOS ISO
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: SnowOS-ISO
-          path: "**/*.iso"
+          path: |
+            **/*.iso
           if-no-files-found: error
+          retention-days: 30

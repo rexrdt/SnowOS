@@ -13,92 +13,108 @@ permissions:
 jobs:
   build:
     name: Build SnowOS
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
-      # Get the SnowOS source code
       - name: Checkout SnowOS
         uses: actions/checkout@v6
 
-      # Show what is actually in the repository
-      - name: Show repository files
-        run: |
-          echo "Current directory:"
-          pwd
-
-          echo ""
-          echo "Repository contents:"
-          ls -la
-
-          echo ""
-          echo "Build script:"
-          ls -la build.sh || true
-
-      # Install common tools required for building a bootable ISO
       - name: Install build dependencies
         run: |
           sudo apt-get update
 
           sudo apt-get install -y \
-            build-essential \
-            gcc \
-            g++ \
-            make \
-            nasm \
-            grub-pc-bin \
-            grub-common \
             xorriso \
-            mtools \
-            qemu-system-x86
+            squashfs-tools \
+            rsync \
+            wget \
+            curl \
+            gnupg \
+            mount \
+            util-linux
 
-      # Make build.sh executable
-      - name: Prepare build script
+      - name: Check build environment
         run: |
-          chmod +x build.sh
+          echo "========================================"
+          echo "SnowOS GitHub Actions Build"
+          echo "========================================"
 
-          echo "build.sh permissions:"
+          echo ""
+          echo "Ubuntu:"
+          lsb_release -a || true
+
+          echo ""
+          echo "Architecture:"
+          uname -m
+
+          echo ""
+          echo "Files:"
+          ls -la
+
+          echo ""
+          echo "build.sh:"
           ls -la build.sh
 
           echo ""
-          echo "build.sh information:"
-          file build.sh
+          echo "Dependencies:"
+          command -v xorriso
+          command -v unsquashfs
+          command -v mksquashfs
+          command -v rsync
+          command -v wget
+          command -v curl
+          command -v gpg
+          command -v mount
+          command -v chroot
 
-      # Run SnowOS build
+      - name: Make build script executable
+        run: |
+          chmod +x build.sh
+
       - name: Build SnowOS
         shell: bash
         run: |
           set -e
 
           echo "========================================"
-          echo "        Building SnowOS"
+          echo "Starting SnowOS build"
           echo "========================================"
-
-          echo ""
-          echo "Running build.sh..."
 
           ./build.sh
 
-          echo ""
-          echo "build.sh completed successfully."
-
-      # Search the entire repository for generated ISOs
-      - name: Find generated ISO
+      - name: Find ISO
         if: success()
         run: |
-          echo "Searching for ISO files..."
+          echo "Searching for generated ISO..."
 
           find . \
             -type f \
             -iname "*.iso" \
             -print
 
-      # Upload the ISO to GitHub Actions
+      - name: Show ISO information
+        if: success()
+        run: |
+          ISO=$(find . -type f -iname "*.iso" | head -n 1)
+
+          if [ -z "$ISO" ]; then
+            echo "ERROR: No ISO found"
+            exit 1
+          fi
+
+          echo "Found ISO:"
+          echo "$ISO"
+
+          echo ""
+          echo "File size:"
+          du -h "$ISO"
+
       - name: Upload SnowOS ISO
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: SnowOS-ISO
           path: |
-            **/*.iso
+            build/output/*.iso
           if-no-files-found: error
           retention-days: 30

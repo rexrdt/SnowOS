@@ -1,0 +1,133 @@
+# SnowOS GDM Theme Configuration
+# Place in /usr/share/gnome-shell/theme/snowos-gdm.css
+
+/* SnowOS GDM Login Screen Theme */
+
+#lockDialogGroup {
+    background: #1a1a2e url(resource:///org/gnome/shell/theme/noise-texture.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#lockDialog {
+    background-color: rgba(26, 26, 46, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    padding: 40px;
+}
+
+.login-dialog {
+    spacing: 20px;
+}
+
+.user-widget {
+    spacing: 16px;
+}
+
+.user-widget-image {
+    border-radius: 50%;
+    border: 3px solid #7aa2f7;
+    box-shadow: 0 4px 16px rgba(122, 162, 247, 0.3);
+}
+
+.user-widget-name {
+    font: 24px Inter;
+    color: #e8e8e8;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.password-entry {
+    border-radius: 8px;
+    border: 2px solid #3a3a5e;
+    background-color: rgba(26, 26, 46, 0.8);
+    color: #e8e8e8;
+    caret-color: #7aa2f7;
+    padding: 12px 16px;
+    font: 16px Inter;
+    width: 300px;
+}
+
+.password-entry:focus {
+    border-color: #7aa2f7;
+    box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.2);
+}
+
+.unlock-button {
+    border-radius: 8px;
+    background-color: #7aa2f7;
+    color: #1a1a2e;
+    font: 16px Inter Bold;
+    padding: 12px 32px;
+    transition: all 200ms ease;
+}
+
+.unlock-button:hover {
+    background-color: #8ab3f7;
+    box-shadow: 0 4px 16px rgba(122, 162, 247, 0.4);
+}
+
+.unlock-button:active {
+    background-color: #6a92e7;
+}
+
+.system-button {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e8e8e8;
+    icon-size: 24px;
+    padding: 12px;
+    transition: all 200ms ease;
+}
+
+.system-button:hover {
+    background-color: rgba(122, 162, 247, 0.2);
+    color: #7aa2f7;
+}
+
+.prompt-label {
+    font: 14px Inter;
+    color: #aaaaaa;
+}
+
+.link-button {
+    color: #7aa2f7;
+    font: 14px Inter;
+}
+
+.link-button:hover {
+    color: #8ab3f7;
+}
+
+/* Top panel on login screen */
+#panel {
+    background-color: rgba(26, 26, 46, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.panel-button {
+    color: #e8e8e8;
+}
+
+.panel-button:hover {
+    color: #7aa2f7;
+}
+
+/* Accessibility */
+.switcher-list {
+    background-color: rgba(26, 26, 46, 0.95);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.switcher-list-item-container:selected {
+    background-color: rgba(122, 162, 247, 0.2);
+    border-radius: 8px;
+}
+
+/* Notification banner on login */
+.notification-banner {
+    background-color: rgba(26, 26, 46, 0.95);
+    border-radius: 12px;
+    border: 1px solid rgba(122, 162, 247, 0.2);
+}

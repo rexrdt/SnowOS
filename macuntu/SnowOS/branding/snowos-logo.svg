@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="snowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#cccccc;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="120" fill="url(#bgGradient)" stroke="#3a3a5e" stroke-width="2"/>
+  
+  <!-- Snowflake -->
+  <g transform="translate(128, 128)" filter="url(#glow)">
+    <!-- Main arms -->
+    <g stroke="url(#snowGradient)" stroke-width="4" stroke-linecap="round">
+      <line x1="0" y1="-50" x2="0" y2="50"/>
+      <line x1="-50" y1="0" x2="50" y2="0"/>
+      <line x1="-35" y1="-35" x2="35" y2="35"/>
+      <line x1="-35" y1="35" x2="35" y2="-35"/>
+    </g>
+    
+    <!-- Branches -->
+    <g stroke="url(#snowGradient)" stroke-width="2.5" stroke-linecap="round">
+      <g transform="rotate(0)">
+        <line x1="0" y1="-20" x2="-10" y2="-35"/>
+        <line x1="0" y1="-20" x2="10" y2="-35"/>
+        <line x1="0" y1="-35" x2="-8" y2="-45"/>
+        <line x1="0" y1="-35" x2="8" y2="-45"/>
+      </g>
+      <g transform="rotate(90)">
+        <line x1="0" y1="-20" x2="-10" y2="-35"/>
+        <line x1="0" y1="-20" x2="10" y2="-35"/>
+        <line x1="0" y1="-35" x2="-8" y2="-45"/>
+        <line x1="0" y1="-35" x2="8" y2="-45"/>
+      </g>
+      <g transform="rotate(180)">
+        <line x1="0" y1="-20" x2="-10" y2="-35"/>
+        <line x1="0" y1="-20" x2="10" y2="-35"/>
+        <line x1="0" y1="-35" x2="-8" y2="-45"/>
+        <line x1="0" y1="-35" x2="8" y2="-45"/>
+      </g>
+      <g transform="rotate(270)">
+        <line x1="0" y1="-20" x2="-10" y2="-35"/>
+        <line x1="0" y1="-20" x2="10" y2="-35"/>
+        <line x1="0" y1="-35" x2="-8" y2="-45"/>
+        <line x1="0" y1="-35" x2="8" y2="-45"/>
+      </g>
+      <g transform="rotate(45)">
+        <line x1="0" y1="-15" x2="-8" y2="-25"/>
+        <line x1="0" y1="-15" x2="8" y2="-25"/>
+      </g>
+      <g transform="rotate(135)">
+        <line x1="0" y1="-15" x2="-8" y2="-25"/>
+        <line x1="0" y1="-15" x2="8" y2="-25"/>
+      </g>
+      <g transform="rotate(225)">
+        <line x1="0" y1="-15" x2="-8" y2="-25"/>
+        <line x1="0" y1="-15" x2="8" y2="-25"/>
+      </g>
+      <g transform="rotate(315)">
+        <line x1="0" y1="-15" x2="-8" y2="-25"/>
+        <line x1="0" y1="-15" x2="8" y2="-25"/>
+      </g>
+    </g>
+    
+    <!-- Center -->
+    <circle cx="0" cy="0" r="6" fill="url(#snowGradient)"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="128" y="210" font-family="Inter, sans-serif" font-size="24" font-weight="600" 
+        fill="#e8e8e8" text-anchor="middle" letter-spacing="2">SnowOS</text>
+</svg>

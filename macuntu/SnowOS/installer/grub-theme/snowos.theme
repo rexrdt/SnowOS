@@ -1,0 +1,61 @@
+# SnowOS GRUB Theme
+
+# Background
+desktop-image: "background.png"
+desktop-color: "#1a1a2e"
+
+# Boot menu
+boot-menu {
+    left: 10%
+    top: 30%
+    width: 80%
+    height: 50%
+    item-color: "#e8e8e8"
+    item-font: "Inter Regular 16"
+    selected-item-color: "#7aa2f7"
+    selected-item-font: "Inter Bold 16"
+    item-height: 40
+    item-spacing: 10
+    scrollbar: true
+    scrollbar-thumb: "scrollbar-thumb.png"
+    scrollbar-track: "scrollbar-track.png"
+    border: 0
+}
+
+# Progress bar
+progress-bar {
+    id: "__timeout__"
+    left: 10%
+    top: 85%
+    width: 80%
+    height: 8
+    bg-color: "#2a2a4e"
+    fg-color: "#7aa2f7"
+    border: 0
+    text: ""
+    text-color: "#e8e8e8"
+    font: "Inter Regular 12"
+}
+
+# Label
+label {
+    left: 10%
+    top: 10%
+    width: 80%
+    height: 50
+    text: "SnowOS"
+    color: "#e8e8e8"
+    font: "Inter Bold 48"
+    align: "center"
+}
+
+label {
+    left: 10%
+    top: 18%
+    width: 80%
+    height: 30
+    text: "macOS-inspired • Ubuntu-based"
+    color: "#8888aa"
+    font: "Inter Regular 18"
+    align: "center"
+}
